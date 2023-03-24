@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+  <meta name = "author" content = "Ali Sabbagh">
+<head>
+	<title>Networking without Harm</title>
+	<!-- Bootstrap CSS -->
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.2/dist/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
+    <!-- Leaflet CSS file -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+     <link rel = "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+
+	<style>
+    body {
+      background-color: white;
+    }
+/*navbar-dark bg-primary*/
+/*19334D*/
+.navbar {
+  background-color: #007F4E;
+  color: white;
+}
+.navbar-brand {
+  color:white;
+}
+.nav-link {
+  color: white;
+}
+    form {
+      padding-left: 2%;
+      padding-right: 5%;
+    }
+    form label:not(.form-check-label):not(.checkbox-label) {
+      font-weight: bold;
+      padding-bottom: 2.5%;
+    } 
+		#emissions-section {
+			display: block;
+		}
+		#offset-section {
+			display: none;
+		}
+    #planer-section {
+      display: none;
+    }
+    .well {
+      padding: 2%;
+     background-color: #F5F5F5;
+     border: none; /* remove the default border */
+     border-radius: 0; /* remove the default border radius */
+    }
+    #map { 
+      height: 600px;
+    }
+    section:not(.cards-container) {
+      padding-left: 2%;
+    }
+    #cards-container {
+      padding-left: 0%;
+    }
+    #offs_row {
+      display: none;
+      padding-left: 38%;
+    }
+    
+    input[type = "checkbox"] {
+      margin-right: 2%;
+      margin-bottom: 2.5%;
+    }
+    .card {
+  display: none;
+  align-items: center;
+  background-color: rgb(236, 236, 236);
+  margin-bottom: 0.5rem;
+  font-size: large;
+  margin-top: 0.5rem;
+}
+.card-title {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+.card-body {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.icon-container {
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+  margin-left: 0rem;
+}
+
+.icon {
+  color: white;
+  padding: 1rem;
+  border-radius: 0%;
+}
+
+.card1 .icon {
+  background-color: rgb(0, 131, 175);
+}
+
+.card2 .icon {
+  background-color: rgb(202, 27, 27);
+}
+
+
+.card3 .icon {
+  background-color: #007F4E;
+}
+
+.content {
+  flex: 1;
+  padding: 1rem;
+}
+
+	</style>
+</head>
+<body>
+  
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg">
+		<a class="navbar-brand" href="#", style = "margin-left: 10px">Networking without Harm</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a class="nav-link" href="#" data-section="emissions">Calculate your Emissions</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#" data-section="offset">Offset your Emissions</a>
+				</li>
+        <li class="nav-item">
+					<a class="nav-link" href="#" data-section="planer">Plan a Conference</a>
+				</li>
+        <li class="nav-item">
+					<a class="nav-link" href="#" data-section="references">References</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<!-- Content Sections -->
+	<section id="emissions-section">
+		<div class = "container-fluid">
+      <div class = "row""> 
+        <div class = "col-4"> <br> Let's get you started. Fill out the information below so we can give you an estimate of the emissions associated with attending your conference <br> <br>
+        </div>
+        </div></div>
+		<div class="container-fluid">
+      <div class="row">
+        <div class="col-4">
+          <div class="well rounded">
+            <form id = "trip">
+              <p>Estimate emissions associated with attending conference</p>
+              <div class="form-group">
+                <label for="origin">Origin/airport name</label> <br>
+                <select id="origin" name="origin" required>
+                </select> <br>
+              </div>   
+              <div class="destination">
+                <label for="destination-">Conference city/airport name</label> <br>
+                <select id="destination" name="destination" required>
+                </select> <br>
+              </div>    
+              <div class = "form-group">
+              <label for="quantity">Number of days attending</label> <br>
+              <input type="number" class = "form-control" id="quantity" name="quantity" min="1" max="100" value="" required>
+              </div> <br>
+              <label>Attendance format</label> <br>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="hotel" value="hotel" checked>
+                <label class="form-check-label" for="exampleRadios1">
+                  In-person, with lodging (e.g., hotel/airbnb)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="friend" value="friend">
+                <label class="form-check-label" for="exampleRadios2">
+                  In-person, no lodging (e.g., home, staying at a friend's)
+                </label>
+              </div> 
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="virtual" value="virtual">
+                <label class="form-check-label" for="exampleRadios2">
+                  Virtual
+                </label>
+              </div> <br>        
+              <div class="form-group">
+                <label for="tr">Transportation</label> <br>
+                <select id="tr" name="tr" required>
+                  <option value="Flight">Flight</option>
+                  <option value="Train">Train</option>
+                  <option value="Driving">Driving</option>
+                  <option value="Carpool (assuming car seats 4)">Carpool (assuming car seats 4)</option>
+                  <option value="Biking">Biking)</option>
+                </select>
+              </div> <br> <br>         
+              <button type="button" class="btn btn-primary" id = "submit-btn">Calculate my emissions</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-8" style = "padding-left: 5%;">
+          <div id = "map"></div>
+        </div>
+      </div>
+      <br> <br> 
+    </div>
+    <div class = "container">
+      <div class = "row" id = "cards-container">
+       <!--  <div class = "col-md-1"></div> -->  
+        <div class = "col">
+          <div class="card card1">
+            <div class="card-body">
+              <div class="icon-container">
+                <i class="fa-solid fa-plane fa-5x icon"></i>
+              </div>
+              <div class="content text-center">
+                <h5 class = "card-title text-center">Distance</h5>
+                <b><p id = "distance"></p></b>
+              </div>
+            </div>
+          </div>
+          </div>
+        <div class = "col">
+          <div class="card card2">
+            <div class="card-body">
+              <div class="icon-container">
+                <i class="fa-solid fa-cloud fa-5x icon"></i>
+              </div>
+              <div class="content text-center">
+                <h5 class = "card-title text-center">Emissions</h5>
+                <b><p id = "emissions"></p></b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class = "col">
+          <div class="card card3">
+            <div class="card-body">
+              <div class="icon-container">
+                <i class="fa-solid fa-recycle fa-5x icon"></i>
+              </div>
+              <div class="content text-center">
+                <h5 class = "card-title text-center">Actions</h5>
+                <b><p id = "actions"></p></b>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <br> <br>
+      <div class = "row" id = "offs_row">
+          <div class = "col-4"> 
+            <button type = "button" class = "btn btn-primary" id = "off_button">Offset my emissions</button>
+          </div>
+      </div> 
+    </div>
+      <br> <br>
+
+       
+        
+        <!-- repeat for each field in the form -->
+        
+      </div>
+    </div>
+  </section>
+    
+    
+	<section id="offset-section">
+    <div class = "container-fluid">
+      <div class = "row">
+        <div class = "col-4" style="margin-top: 15%; margin-bottom: 30%;">
+          <div class="well bg-light rounded">
+          <form>
+            <b><p>In order to offset these theoretical emissions, you would need to make the following lifestyle changes for 1 year (click the checkboxes)</p></b>
+            <ul style = "list-style: none; padding: 2%;">
+              <li><input type="checkbox" id="veg" name="item1" value="Go vegetarian"><label class = "checkbox-label" for="item1">Go vegetarian</label></li>
+              <li><input type="checkbox" id="recycle" name="item2" value="Recycle"><label class = "checkbox-label" for="item2">Recycle</label></li>
+              <li><input type="checkbox" id="food_waste" name="item3" value="Reduce your food waste to zero"><label class = "checkbox-label" for="item3">Reduce your food waste to zero</label></li>
+              <li><input type="checkbox" id="local" name="item4" value="Eat local food only"><label class = "checkbox-label" for="item4">Eat local food only</label></li>
+              <li><input type="checkbox" id="car" name="item5" value="Live car free"><label class = "checkbox-label" for="item5">Live car free</label></li>
+              <li><input type="checkbox" id="energy" name="item5" value="Source household energy from renewables"><label class = "checkbox-label" for="item5">Source household energy from renewables</label></li>
+              <li><input type="checkbox" id="clothes" name="item5" value="Hang clothing to dry"><label class = "checkbox-label" for="item5">Hang clothing to dry</label></li>
+            </ul>
+          </form>
+          </div>
+        </div>
+        <div class = "col-1"></div>
+        <div class = "col-7"  style="margin-top: 12%;">
+          <div>
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+	</section>
+
+
+  <section id="planer-section">
+    <div class = "container-fluid">
+      <div class = "row" style = "margin-top: 2%;">
+        <div class = "col-4">
+          <p>This tab is meant to help plan your next conference. Results obtained here are based on previous ASCO conferences</p>
+        </div>
+        <div class = "col-1"></div>
+        <div class = "col-6">
+          <p id = "conf_emit"> </p>
+        </div>
+      </div>
+    </div>
+    <div class = "container-fluid"">
+      <div class = "row">
+        <div class="col-4">
+          <div class="well bg-light rounded">
+            <form id = "plan">
+              <div class = "form-group">
+                <label for="us_attendees">Estimated number of US participants</label> <br>
+                <input type="number" class = "form-control" id="us_attendees" name="us_attendees" min="0" value="">
+                </div> <br>
+            <div class = "form-group">
+              <label for="int_attendees">Estimated number of international participants</label> <br>
+              <input type="number" class = "form-control" id="int_attendees" name="int_attendees" min="0" value="">
+              </div> <br>
+          </form>
+      </div>
+        </div>
+        <div class = "col-1"></div>
+      <div class = "col-6">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Attendance</th>
+                <th>Estimated range in waste (metric tons of CO2)</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>25% virtual </td>
+              <td id = "quarter"></td>
+            </tr>
+            <tr>
+              <td>50% virtual </td>
+              <td id = "half"></td>
+            </tr>
+            <tr>
+              <td>75% virtual </td>
+              <td id = "seventy"></td>
+            </tr>
+            <tr>
+              <td>Fully virtual </td>
+              <td id = "full_virt"></td>
+            </tr>
+          </table>
+        </div>
+        
+      </div>
+    </div>
+    </div>
+	</section>
+
+  <section id = "references-section">
+  </section>
+
+
+  <a href="https://greenhealth.ucsf.edu"  target = "_blank">
+    <img src="https://asradonc.github.io/networkwithoutharm.github.io/green.png" alt="UCSF GreenHealth Lab" width="9%" height="5%" style = "position: fixed; bottom: 0; right: 0;">
+  </a>
+  
+
+
+
+	<!-- Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
+  <!-- Leaflet JavaScript file -->
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+ integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+ crossorigin=""></script>
+<script src ="https://asradonc.github.io/networkwithoutharm.github.io/chart.umd.js"></script>
+
+
+	<script type = "module">
+    import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.4.0/latlon-spherical.min.js';
+		$(document).ready(function() {
+  // handle nav link click event
+  // Set the URL of the CSV file
+  var parsedData;
+  var conf_emit = document.getElementById('conf_emit');
+  conf_emit.innerHTML = "The estimated overall waste from the conference is " + "<b>" + 0 + "</b> " + "metric tons of CO2. (This includes waste from travel, lodging, and space utilization) <br>     If a hybrid conference is held, the estimates become: ";
+  var poly_counter = 0;
+  var airport_names;
+  var url = "https://github.com/ASRadOnc/networkwithoutharm.github.io/airports_database_calculator_final.csv";
+  var emit;
+  var veg;
+  var recycle;
+  var food_waste;
+  var local;
+  var car;
+  var energy;
+  var clothes;
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart;
+  myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Offsets', 'Emissions'],
+        datasets: [
+            {label: 'Your emissions',
+             backgroundColor: 'rgba(75, 192, 192, 0.8)',
+             borderColor: 'rgba(50, 50, 50, 1)', 
+             borderWidth: 1,
+             data: [0 , emit]},
+            {
+                label: 'Go Vegetarian',
+                backgroundColor: 'rgba(255, 162, 145, 0.8)',
+                borderColor: 'rgba(225, 115, 98, 1)',
+                borderWidth: 1,
+                data: [0.9 * veg , 0],
+            },
+            {
+                label: 'Recycle',
+                backgroundColor: 'rgba(140, 190, 214, 0.8)',
+                borderColor: 'rgba(121, 163, 184, 1)',
+                borderWidth: 1,
+                data: [0.21 * recycle,0],
+            },
+            {
+                label: 'Reduce your food waste to zero',
+                backgroundColor: 'rgba(255, 237, 153, 0.8)',
+                borderColor: 'rgba(224, 204, 92, 1)',
+                borderWidth: 1,
+                data: [0.37 * food_waste,0],
+            },
+            {
+                label: 'Eat local food only',
+                backgroundColor: 'rgba(186, 173, 240, 0.8)',
+                borderColor: 'rgba(171, 153, 230, 1)',
+                borderWidth: 1,
+                data: [0.36 * local,0],
+            },
+            {
+                label: 'Live car free',
+                backgroundColor: 'rgba(254, 218, 117, 0.8)',
+                borderColor: 'rgba(235, 185, 91, 1)',
+                borderWidth: 1,
+                data: [3.08 * car,0],
+            },
+            {
+                label: 'Source household energy from renewables',
+                backgroundColor: 'rgba(255, 186, 216, 0.8)',
+                borderColor: 'rgba(228, 143, 181, 1)',
+                borderWidth: 1,
+                data: [1.4 * energy,0],
+            },
+            {
+                label: 'Hang clothing to dry',
+                backgroundColor: 'rgba(186, 240, 227, 0.8)',
+                borderColor: 'rgba(167, 224, 216, 1)',
+                borderWidth: 1,
+                data: [0.21 * clothes,0],
+            }
+        ]
+    },
+    options: {
+        scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                stacked: true
+            }
+        }
+    }
+});
+
+// Make an AJAX request to the URL
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Once the file is loaded, parse the CSV data
+      var csvData = xhr.responseText;
+      parsedData = parseCSV(csvData);
+      //airport_names = parseCSV_col(csvData )
+      //parsedData.map(function(obj) {
+      //return { value: obj.id, text: obj.name };
+      //});
+     // Do something with the parsed data
+    
+     // initialize selectize input
+     $('#origin').selectize({
+      options: parsedData,
+      render: {
+        option: function(item, escape) {
+          return '<div style = "padding: 2%;">' +  escape(item.name_calc) + "<br>" + escape(item.municipality) + " - " + escape(item.Country_Name) + "</div>";
+        }
+      },
+      valueField: 'name_calc',
+      labelField: 'name_calc',
+      searchField: ['name_calc', 'municipality', 'Country.Name'],
+      allowInput: true,
+      placeholder: "Type city/airport name, e.g., San Francisco (SFO)"
+    });
+
+   $('#destination').selectize({
+    options: parsedData,
+      render: {
+        option: function(item, escape) {
+          return '<div style = "padding: 2%;">' +  escape(item.name_calc) + "<br>" +  escape(item.municipality) + " - " + escape(item.Country_Name) +  "</div>";
+        }
+      },
+      valueField: 'name_calc',
+      labelField: 'name_calc',
+      searchField: ['name_calc', 'municipality', 'Country.Name'],
+      allowInput: true,
+    placeholder: "Type city/airport name, e.g., Beirut (BEY)"
+  });
+
+  $('#tr').selectize({
+  });
+
+    }
+  };
+  xhr.send();
+
+// Parse the CSV data into an array of objects
+  function parseCSV(csvData) {
+    var lines = csvData.split("\n");
+    var headers = lines[0].split(",");
+    var result = [];
+    for (var i = 1; i < lines.length; i++) {
+      var obj = {};
+      var currentLine = lines[i].split(",");
+      for (var j = 0; j < headers.length; j++) {
+       obj[headers[j]] = currentLine[j];
+      }
+      result.push(obj);
+    }
+    return result;
+  }
+
+// Function to parse CSV data and return values from a specific column
+  function parseCSV_col(csvData, column) {
+    var parsedData_ = [];
+    var lines = csvData.split("\n");
+    var headers = lines[0].split(",");
+    var columnIndex = headers.indexOf(column);
+  
+    for (var i = 1; i < lines.length; i++) {
+      var values = lines[i].split(",");
+      if (values.length > 1) {
+        parsedData_.push(values[columnIndex].trim());
+       }
+    }
+  
+    return parsedData_;
+
+  }
+
+
+  $('.nav-link').click(function(e) {
+    e.preventDefault();
+    // hide all sections
+    $('section').hide();
+    // show the section for the clicked link
+    var sectionId = $(this).data('section') + '-section';
+    $('#' + sectionId).show();
+  });
+
+  // Get the submit button and all required form fields
+const submitBtn = document.getElementById('submit-btn');
+const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+
+// Disable the submit button by default
+submitBtn.disabled = true;
+
+// Add an event listener to each required form field that checks if all required fields are filled in
+requiredFields.forEach(field => {
+  field.addEventListener('input', () => {
+    // Check if all required fields are filled in
+    const allFieldsFilledIn = Array.from(requiredFields).every(field => field.value.trim() !== '');
+
+    // Enable the submit button if all required fields are filled in, otherwise disable it
+    submitBtn.disabled = !allFieldsFilledIn;
+  });
+});
+
+
+
+
+  document.getElementById('off_button').addEventListener('click', function() {
+  // prevent the default form submission behavior
+  event.preventDefault();
+  $('section').hide();
+  // show the section for the clicked link
+  var sectionId = 'offset-section';
+  $('#' + sectionId).show();
+  navbarNav.scrollIntoView({ behavior: 'smooth' });
+  }); 
+
+
+
+
+  document.getElementById('submit-btn').addEventListener('click', function() {
+    const form = document.querySelector('form');
+    if (!form.checkValidity()) {
+    // If any required field is not filled, display an error message or alert the user
+    alert('Please fill out all required fields');
+    event.preventDefault();
+  }
+  else {
+    //Get longitude and latitude for origin and destination
+    const result = parsedData.find(parsedData => parsedData.name_calc == document.getElementById('origin').value)
+    const result_dest = parsedData.find(parsedData => parsedData.name_calc == document.getElementById('destination').value)
+    const p1_lo = result ? result.longitude_r : null;
+    const p1_la = result ? result.latitude_r : null;
+
+    const p2_lo = result_dest ? result_dest.longitude_r : null;
+    const p2_la = result_dest ? result_dest.latitude_r : null;
+    
+    const p1 = new LatLon(p1_la , p1_lo);
+    const p2 = new LatLon(p2_la , p2_lo);
+    const distance = p1.distanceTo(p2)/1609;
+
+    const num_days = document.getElementById("quantity").value;
+    const transport = document.getElementById("tr").value;
+    const hotel = document.getElementById("hotel");
+    
+    const virtual = document.getElementById("virtual");
+
+    const coef = (transport === "Driving") ? 0.91 : (transport === "Flight") ? 0.39 : (transport === "Carpool (assuming car seats 4)") ? 0.2275 : (transport === "Train") ? 0.252262529 : 0;
+    const lodg = (hotel.checked) ? 1 : 0;
+
+    emit = (coef*distance*2 + 67.24*num_days*lodg + 12.25*num_days)*0.000453592;
+    emit = (virtual.checked) ? (157.35*6*num_days*1e-6).toFixed(4) : emit.toFixed(2);
+
+    const cards = document.querySelectorAll('.card');
+    const cardsContainer = document.querySelector('#cards-container');
+    const offs_ = document.querySelectorAll('#offs_row');
+
+     // Update the display property of each card to "block"
+    cards.forEach(card => {
+      card.style.display = 'block';
+    });
+    
+
+    offs_.forEach(offs_row => {
+      offs_row.style.display = 'block';
+    })
+
+    var actions = (emit-0.0028).toFixed(3);
+
+    document.getElementById("distance").innerHTML = "A nonstop flight to the conference is ~ " + Math.round(distance) + " miles";
+    document.getElementById("emissions").innerHTML = "Your estimated waste is ~" + emit + " metric tons of CO2";
+    document.getElementById("actions").innerHTML = "Virtual attendance would spare " + actions + " metric tons of CO2";
+    // Scroll to the cards section
+    cardsContainer.scrollIntoView({ behavior: 'smooth' });
+    update_chart();
+
+
+  }
+});
+
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+function update_chart() {
+    veg = document.getElementById("veg").checked ? 1:0;
+    recycle = document.getElementById("recycle").checked ? 1:0;
+    food_waste = document.getElementById("food_waste").checked ? 1:0;
+    local = document.getElementById("local").checked ? 1:0;
+    car = document.getElementById("car").checked ? 1:0;
+    energy = document.getElementById("energy").checked ? 1:0;
+    clothes = document.getElementById("clothes").checked ? 1:0;
+    myChart.data = {
+        labels: ['Offsets', 'Emissions'],
+        datasets: [
+            {label: 'Your emissions',
+             backgroundColor: 'rgba(75, 192, 192, 0.8)',
+             borderColor: 'rgba(50, 50, 50, 1)', 
+             borderWidth: 1,
+             data: [0 , emit]},
+            {
+                label: 'Go Vegetarian',
+                backgroundColor: 'rgba(255, 162, 145, 0.8)',
+                borderColor: 'rgba(225, 115, 98, 1)',
+                borderWidth: 1,
+                data: [0.9 * veg , 0],
+            },
+            {
+                label: 'Recycle',
+                backgroundColor: 'rgba(140, 190, 214, 0.8)',
+                borderColor: 'rgba(121, 163, 184, 1)',
+                borderWidth: 1,
+                data: [0.21 * recycle,0],
+            },
+            {
+                label: 'Reduce your food waste to zero',
+                backgroundColor: 'rgba(255, 237, 153, 0.8)',
+                borderColor: 'rgba(224, 204, 92, 1)',
+                borderWidth: 1,
+                data: [0.37 * food_waste,0],
+            },
+            {
+                label: 'Eat local food only',
+                backgroundColor: 'rgba(186, 173, 240, 0.8)',
+                borderColor: 'rgba(171, 153, 230, 1)',
+                borderWidth: 1,
+                data: [0.36 * local,0],
+            },
+            {
+                label: 'Live car free',
+                backgroundColor: 'rgba(254, 218, 117, 0.8)',
+                borderColor: 'rgba(235, 185, 91, 1)',
+                borderWidth: 1,
+                data: [3.08 * car,0],
+            },
+            {
+                label: 'Source household energy from renewables',
+                backgroundColor: 'rgba(255, 186, 216, 0.8)',
+                borderColor: 'rgba(228, 143, 181, 1)',
+                borderWidth: 1,
+                data: [1.4 * energy,0],
+            },
+            {
+                label: 'Hang clothing to dry',
+                backgroundColor: 'rgba(186, 240, 227, 0.8)',
+                borderColor: 'rgba(167, 224, 216, 1)',
+                borderWidth: 1,
+                data: [0.21 * clothes,0],
+            }
+        ]
+    }
+    myChart.options = {
+        scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                stacked: true
+            }
+        }
+    }
+    myChart.update();
+};
+// Add an event listener for the change event to each checkbox
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    update_chart();
+  })
+});
+
+var us_attendance = document.getElementById("us_attendees");
+var int_attendance = document.getElementById("int_attendees");
+
+function update_table() {
+  var quarter = document.getElementById('quarter');
+  var half = document.getElementById('half');
+  var seventy = document.getElementById('seventy');
+  var full_virt = document.getElementById('full_virt');
+  var us = parseInt((document.getElementById("us_attendees").value == "") ? 0 : document.getElementById("us_attendees").value);
+  var int = parseInt((document.getElementById("int_attendees").value == "") ? 0 : document.getElementById("int_attendees").value);
+  var attend_num = us + int;
+  var est_25_b = (0.63*attend_num).toFixed(0);
+  var est_25_w = (0.96*attend_num).toFixed(0);
+  var est_50_b = (0.38*attend_num).toFixed(0);
+  var est_50_w = (0.73*attend_num).toFixed(0);
+  var est_75_b = (0.15*attend_num).toFixed(0);
+  var est_75_w = (0.48*attend_num).toFixed(0);
+  var r_25 = est_25_b + " - " + est_25_w;
+  var r_50 = est_50_b + " - " + est_50_w;
+  var r_75 = est_75_b + " - " + est_75_w;
+  var r_100 = (0.0028*attend_num).toFixed(2);
+  quarter.innerHTML = r_25;
+  half.innerHTML = r_50;
+  seventy.innerHTML = r_75;
+  full_virt.innerHTML = r_100;
+  var n = 0.462*us + 1.928*int;
+  conf_emit.innerHTML =  "The estimated overall waste from the conference is " + "<b>" + n.toFixed(0) + "</b> " + "metric tons of CO2. (This includes waste from travel, lodging, and space utilization) <br>     If a hybrid conference is held, the estimates become: ";   
+};
+
+
+us_attendance.addEventListener('input', function() {
+  update_table();
+});
+
+int_attendance.addEventListener('input', function() {
+  update_table();
+});
+
+
+$("#origin").on('change', function() {
+  update_map();
+});
+
+$("#destination").on('change', function() {
+  update_map();
+});
+
+
+function update_map() {
+  //Remove all markers then add
+  markerGroup.clearLayers();
+  // loop through each layer on the map
+  map.eachLayer(function(layer) {
+  // check if the layer is a polyline
+    if (layer instanceof L.Polyline) {
+      //Remove polyline (so can update with new markers)
+      map.removeLayer(layer);
+    }
+});
+  //Get new coordinates
+  var origin_ = parsedData.find(parsedData => parsedData.name_calc == document.getElementById('origin').value)
+  var destination_ = parsedData.find(parsedData => parsedData.name_calc == document.getElementById('destination').value)
+  var p1_lo_ = origin_ ? origin_.longitude_r : null;
+  var p1_la_ = origin_ ? origin_.latitude_r : null;
+
+  var p2_lo_ = destination_ ? destination_.longitude_r : null;
+  var p2_la_ = destination_ ? destination_.latitude_r : null;
+  //Check if user kept field empty. If yes --> don't do anything. If no --> add marker
+  //This also works when other field is unchanged since technically the update is the old marker
+  if(origin_ == null) {
+    
+  } else {
+    var marker_orig = L.marker([p1_la_ , p1_lo_]);
+    marker_orig.addTo(markerGroup);
+  }
+
+  if (destination_ == null) {
+
+  } else {
+    var marker_dest = L.marker([p2_la_ , p2_lo_]);
+    marker_dest.addTo(markerGroup);
+  }
+
+
+  if(origin_ != null & destination_ != null) {
+    var latlngs = markerGroup.getLayers().map(function(marker) {
+    return marker.getLatLng();
+    });
+    var polyline = L.polyline(latlngs, {color: 'purple',
+  opacity: 0.5,
+  weight: 3,
+  dashArray: '5,10'}).addTo(map);
+    poly_counter ++;
+    var markerBounds = L.latLngBounds([marker_orig.getLatLng(), marker_dest.getLatLng()]);
+    map.fitBounds(markerBounds);
+  }
+  else {
+    map.setView([10, 10], 2.4);
+  }
+
+}; 
+    })
+
+</script>
+  
+<script>
+  var map = L.map('map').setView([10, 10], 2.4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  id: 'mapbox/streets-v11',
+  tileSize: 512,
+  zoomOffset: -1
+}).addTo(map);
+
+var markerGroup = L.layerGroup().addTo(map);
+</script>
+  
+</body>
+</html>
