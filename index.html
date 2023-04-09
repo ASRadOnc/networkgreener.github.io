@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html>
+  <meta name = "author" content = "Ali Sabbagh">
+<head>
+	<title>Networking without Harm</title>
+	<!-- Bootstrap CSS -->
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.2/dist/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.bootstrap4.min.css" />
+    <!-- Leaflet CSS file -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+     <link rel = "stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
+     <link rel="stylesheet" href="Inter-3.19/Inter Web/inter.css" />
+	<style>
+    :root {
+  font-family: "Inter", sans-serif;
+  }
+    body {
+      background-color: white;
+    }
+/*navbar-dark bg-primary*/
+/*19334D*/
+.navbar {
+  background-color: #0C1F46;
+  color: white;
+
+}
+
+.navbar-brand {
+ 
+line-height: 24px;
+letter-spacing: 0.03em;
+text-transform: uppercase;
+color:white;
+font-family: Inter;
+font-style: black;
+font-size: 20px;
+font-weight: 900;
+/* color: FFFFFF; */
+text-decoration: underline;
+text-decoration-color: green;
+text-decoration-thickness: 2px;
+text-decoration: green underline;
+}
+.nav-link {
+color: white;
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 22px;
+}
+.nav-link:active,
+.nav-link:focus {
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: green;
+  text-decoration-thickness: 2px;
+  outline: none;
+}
+    form {
+      padding-left: 2%;
+      padding-right: 5%;
+    }
+    form label:not(.form-check-label):not(.checkbox-label) {
+      font-weight: bold;
+      padding-bottom: 2.5%;
+    } 
+		#emissions-section {
+			display: block;
+		}
+		#offset-section {
+			display: none;
+		}
+    #planer-section {
+      display: none;
+    }
+    .well {
+      padding: 2%;
+     background-color: #F5F5F5;
+     border: none; /* remove the default border */
+     border-radius: 0; /* remove the default border radius */
+    }
+    #map { 
+      height: 600px;
+    }
+    section:not(.cards-container) {
+      padding-left: 2%;
+    }
+    #cards-container {
+      padding-left: 0%;
+    }
+    #offs_row {
+      display: none;
+      padding-left: 38%;
+    }
+    
+    input[type = "checkbox"] {
+      margin-right: 2%;
+      margin-bottom: 2.5%;
+    }
+
+    #cards-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+    .card {
+  display: none;
+  align-items: center;
+  background-color: transparent;
+  margin-bottom: 0.5rem;
+  font-size: large;
+  margin-top: 0.5rem;
+  border: none;
+  box-shadow: none;
+}
+.card-title {
+  margin-bottom: 0;
+  margin-top: 0;
+  font-weight: 600;
+}
+.card-body {
+  display: flex;
+  align-items: left;
+  margin-bottom: 0;
+}
+
+.icon-container {
+  margin-right: 1rem;
+  margin-top: 0;
+  margin-left: 0rem;
+}
+
+.icon {
+  color: white;
+  padding: 0rem;
+  border-radius: 0%;
+}
+
+.card1 .icon {
+  color: #EB3223;
+}
+
+.card2 .icon {
+  color: rgb(0, 131, 175);
+}
+
+
+.card3 .icon {
+  color: #007F4E;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  padding: 1rem;
+  text-align: left;
+}
+
+label {
+  font-style: 'normal';
+  font-weight: 700;
+  font-size: 14px;
+}
+
+select {
+  width: 293px;
+  height: 29px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.option-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.option {
+    position: relative;
+    cursor: pointer;
+}
+
+.option input[type="radio"] {
+    position: absolute;
+    left: -9999px;
+}
+
+.option-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 150px;
+    height: 70px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.2s;
+}
+
+.option-content i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.option input[type="radio"]:checked + .option-content {
+    border-color: #007bff;
+}
+
+
+.form-group.transportation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.transportation-options {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+/* label {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+label {
+  cursor: pointer;
+}
+
+.transportation input[type="radio"] {
+  display: none;
+}
+
+.transportation input[type="radio"] + label {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.transportation input[type="radio"] + label:hover {
+  background-color: #f1f1f1;
+}
+
+.transportation input[type="radio"]:checked + label {
+  background-color: #ccc;
+}
+
+.transportation input[type="radio"]:checked + .image-text-container label {
+  background-color: #ccc;
+}
+
+.transportation img {
+  margin-right: 5px;
+  vertical-align: middle;
+  height: 25px;
+  width: 25px;
+}
+
+.form-group label {
+  margin-right: 10px;
+}
+
+form label:not(.form-check-label):not(.checkbox-label) {
+  font-weight: bold;
+  padding-bottom: 0%;
+  font-size: 1.2rem;
+}
+
+form select {
+  height: 100%;
+}
+ */
+
+ .checkbox-label {
+  font-weight: 550;
+  margin-bottom: 2%;
+  font-size: large;
+ }
+
+#submit-btn {
+  width: 200px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #D9D9D9;
+  color: #0C1F46;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+}
+
+#submit-btn:hover {
+  background-color: #3e8e41;
+  cursor: pointer;
+}
+
+.emissions_appear {
+  display: none;
+  background-color: #70C6C7;
+}
+
+#myChart {
+  background-color: white;
+}
+
+
+
+	</style>
+</head>
+<body>
+  
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg">
+		<a class="navbar-brand" href="#", style = "margin-left: 0.5%">Network Greener <br> Emissions Calculator</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a class="nav-link" href="#" data-section="emissions">Emissions Calculator</a>
+				</li>
+        <li class="nav-item">
+					<a class="nav-link" href="#" data-section="planer">Conference Calculator</a>
+				</li>
+        <li class="nav-item">
+					<a class="nav-link" href="#" data-section="references">References</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<!-- Content Sections -->
+	<section id="emissions-section">
+    <div class = "row"><br></div>
+		<div class = "container-fluid">
+      <div class = "row"> 
+        <div class = "col-6"> <p> <span style="font-family: 'Inter'; font-style: normal; font-weight: 700; font-size: 50px; line-height: 61px; color: #0C1F46;">1.</span> 
+        <span style = "font-family: 'Inter';font-style: normal;font-weight: 700;font-size: 30px;line-height: 36px;color: #0C1F46;">Calculate your emissions...</span> </p>
+        <p style = "font-family: 'Inter'; font-style: normal; font-weight: 500; font-size: 20px; line-height: 24px; margin-left: 45px; color: #000000;">  Start by understanding your carbon footprint, then scroll below to learn more about how you can offset your emissions.</p>
+          <!-- <br> Let's get you started. Fill out the information below so we can give you an estimate of the emissions associated with attending your conference <br> <br> -->
+        </div>
+        </div></div>
+        <div class="container-fluid"  style="margin-left: 2.2%; margin-top: 1%;">
+          <div class = "row">
+            <div class = "col-4">
+              <form>
+                <div class = "form-group">
+                  <h4><b>Travel Details</b></h4>
+                </div>
+                <br>
+                <div class = "form-group transportation">
+                <label for = "tr"> Transportation </label> <br>
+                <div class="option-container">
+                  <label class="option">
+                      <input type="radio" name="transport" value="Flight" />
+                      <div class="option-content">
+                          <i class="fas fa-plane"></i>
+                          <span>Plane</span>
+                      </div>
+                  </label>
+                  <label class="option">
+                      <input type="radio" name="transport" value="Driving" />
+                      <div class="option-content">
+                          <i class="fas fa-car"></i>
+                          <span>Car</span>
+                      </div>
+                  </label>
+                </label>
+                <label class="option">
+                  <input type="radio" name="transport" value="Biking" />
+                  <div class="option-content">
+                      <i class="fas fa-biking"></i>
+                      <span>Biking</span>
+                  </div>
+              </label>
+                </div>
+                <div class = "option-container">
+                  <label class="option">
+                    <input type="radio" name="transport" value="Train" />
+                    <div class="option-content">
+                        <i class="fas fa-train"></i>
+                        <span>Train</span>
+                    </div>
+                  </label>
+                    <label class="option">
+                      <input type="radio" name="transport" value="Carpool" />
+                      <div class="option-content">
+                          <i class="fas fa-user-group"></i>
+                          <span>Carpool</span>
+                      </div>
+                  </label>
+                  <label class="option">
+                      <input type="radio" name="transport" value="Walking" />
+                      <div class="option-content">
+                          <i class="fas fa-walking"></i>
+                          <span>Walking</span>
+                      </div>
+                  </label>
+              </div>
+                </div>
+                <!-- <div class = "form-group transportation">
+                  <label for = "tr"> Transportation </label> <br>
+
+                  <label>
+                  <input type = "radio" name = "option" value = "Driving">
+                    <img src="car.png" alt="Car">
+                    <span>Car</span>
+                </label>
+
+                <label>
+                  <input type = "radio" name = "option" value = "Carpool">
+                  <div class="image-text-container">
+                    <img src="carpool.png" alt="Carpool">
+                    <span>Carpool</span>
+                  </div>
+                </label>
+
+                <label>
+                  <input type = "radio" name = "option" value = "Train">
+                  <div class="image-text-container">
+                    <img src="train.png" alt="Train">
+                    <span>Train</span>
+                  </div>
+                </label>
+                  <label>
+                  <input type = "radio" name = "option" value = "Biking">
+                  <div class="image-text-container">
+                    <img src="bike.png" alt="Bike">
+                    <span>Bike</span>
+                  </div>
+                </label>
+              </div> <br>
+              -->
+              <div class="form-group">
+                <label for="origin">Where from?</label>
+                <select id="origin" name="origin" required>
+                </select> <br>
+              </div>   
+              <div class="destination">
+                <label for="destination-">Where to?</label> 
+                <select id="destination" name="destination" required>
+                </select> <br>
+              </div> <br> 
+              <label for="quantity">Length of stay?</label>
+              <input type="number" class = "form-control" id="quantity" name="quantity" min="1" max="100" value="" required>
+              <br>   
+
+              <div class="form-group radio-buttons">
+                <label for = "format">Format?</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="hotel" value="hotel" checked>
+                  <label class="form-check-label" for="hotel">
+                    In-person + hotel or airbnb
+                  </label> <br>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="friend" value="friend">
+                  <label class="form-check-label" for="friend">
+                    In-person + staying at home or with a friend
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="virtual" value="virtual">
+                  <label class="form-check-label" for="Virtual">
+                    Virtual 
+                  </label>
+                </div>
+                <!-- Add more radio button options as needed -->
+              </div>
+              <br>
+              <button type="button" class="btn btn-primary" id = "submit-btn">Calculate</button>
+
+              </form>
+            </div>    
+ <!--        </div>
+		
+      <div class="col-8" style = "padding-left: 5%;"> 
+    
+    </div> -->
+
+    <div class = "col-3"></div>
+
+    <div class = "col-4" id = "cards-container">
+
+       <!--  <div class = "col-md-1"></div> -->  
+      
+        <div class="card card1">
+          <div class="card-body">
+            <div class="icon-container">
+              <i class="fa-solid fa-cloud fa-4x icon"></i>
+            </div>
+            <div class="content">
+              <h4 class = "card-title">Carbon Footprint</h4>
+              <p id = "emissions"></p>
+            </div>
+          </div>
+        </div>
+      
+    
+          <div class="card card2">
+            <div class="card-body">
+              <div class="icon-container">
+                <i class="fa-solid fa-plane-departure fa-4x icon"></i>
+              </div>
+              <div class="content">
+                <h4 class = "card-title">Distance</h4>
+                <p id = "distance"></p>
+              </div>
+            </div>
+          </div>
+         
+          
+          <div class="card card3">
+            <div class="card-body">
+              <div class="icon-container">
+                <i class="fa-solid fa-recycle fa-4x icon"></i>
+              </div>
+              <div class="content">
+                <h4 class = "card-title"> Offset Emissions</h4>
+                <p id = "actions"></p>
+              </div>
+            </div>
+          </div>
+       
+        
+    </div>
+    </div>
+       
+        
+        <!-- repeat for each field in the form -->
+        
+      </div>
+
+      <br><br>
+
+      <div class = "container-fluid emissions_appear">
+        <div class = "container-fluid">
+          <div class = "row"> 
+            <div class = "col-8"></div>
+            <div class = "col-4"> <p> <span style="font-family: 'Inter'; font-style: normal; font-weight: 700; font-size: 50px; line-height: 61px; color: #0C1F46;">2.</span> 
+            <span style = "font-family: 'Inter';font-style: normal;font-weight: 700;font-size: 30px;line-height: 36px;color: #0C1F46;">...offset your emissions</span> </p>
+            <p style = "font-family: 'Inter'; font-style: normal; font-weight: 500; font-size: 20px; line-height: 24px; margin-left: 45px; color: #000000;">  Use the interactive graph to see how changes to your lifestyle can offset your emissions.</p>
+            </div>
+            </div></div>
+        <div class = "container-fluid">
+        <div class = "row">
+          <div class = "col-4" style="margin-bottom: 10%;">
+            <div class="form">
+            <form>
+              <div class = "form-group">
+                <h4><b>Lifestyle Changes</b></h4>
+              </div>
+              <p style = "font-weight: 500; color: #0C1F46">Select any of the following options to see how a year of change can offset your travel emissions:</p>
+              <ul style = "list-style: none; padding: 3%;">
+                <li><input type="checkbox" id="veg" name="item1" value="Go vegetarian"><label class = "checkbox-label" for="item1">Go vegetarian</label></li>
+                <li><input type="checkbox" id="recycle" name="item2" value="Recycle"><label class = "checkbox-label" for="item2">Recycle</label></li>
+                <li><input type="checkbox" id="food_waste" name="item3" value="Reduce your food waste to zero"><label class = "checkbox-label" for="item3">Reduce your food waste to zero</label></li>
+                <li><input type="checkbox" id="local" name="item4" value="Eat local food only"><label class = "checkbox-label" for="item4">Eat local food only</label></li>
+                <li><input type="checkbox" id="car" name="item5" value="Live car free"><label class = "checkbox-label" for="item5">Live car free</label></li>
+                <li><input type="checkbox" id="energy" name="item5" value="Source household energy from renewables"><label class = "checkbox-label" for="item5">Source household energy from renewables</label></li>
+                <li><input type="checkbox" id="clothes" name="item5" value="Hang clothing to dry"><label class = "checkbox-label" for="item5">Hang clothing to dry</label></li>
+              </ul>
+            </form>
+            </div>
+          </div>
+          <div class = "col-1"></div>
+          <div class = "col-7">
+            <div>
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+  </section>
+    
+
+  <section id="planer-section">
+    <div class = "container-fluid">
+      <div class = "row" style = "margin-top: 2%;">
+        <div class = "col-5">
+          <p style = "font-weight: 700; color: black; font-size: xx-large;">Calculate your conference emissions... </p>
+          <span style = "font-weight: 500; color: black;"> See emissions estimates for conferences with different virtual and on-site attendance formats. <br> <br>
+
+            Estimations are based on the number of participants that are traveling (nationally and/or internationally), lodging, and space utilization. </span>
+        </div>
+        <div class = "col-2"></div>
+        <div class = "col-3">
+          <br>
+          <br>
+          <br>
+          <div class = "info-box" style = "background: #70C6C7;
+          color: white;
+          width: 300px;
+          padding: 10px;
+          border-radius: 1px;">
+          <div style="display: flex; align-items: center;">
+          <span style = "font-size: x-large; padding: 5%; margin-right: 8%;" id = "conf_emit"> </span> 
+          <span style = "flex-direction: column; font-size: normal; font-weight: 500; margin-left: 4%">Est.  overall <br> conference waste in <br> metric tons</span>
+          </div>
+        </div>
+        </div>
+      </div>
+      <br>
+      </div>
+    <div class = "container-fluid" style = "margin-top: 5% ; margin-bottom: 12%;">
+      <div class = "row">
+        <div class="col-4">
+          <div class="form">
+            <form id = "plan">
+              <div class = "form-group">
+                <label for="us_attendees">U.S. Participants</label> <br>
+                <input type="number" class = "form-control" id="us_attendees" name="us_attendees" min="0" value="">
+                </div> <br>
+            <div class = "form-group">
+              <label for="int_attendees">International Participants</label> <br>
+              <input type="number" class = "form-control" id="int_attendees" name="int_attendees" min="0" value="">
+              </div> <br>
+          </form>
+      </div>
+        </div>
+        <div class = "col-2"></div>
+      <div class = "col-5">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Attendance</th>
+                <th>Estimated range in waste (metric tons of CO2)</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>25% virtual </td>
+              <td id = "quarter"></td>
+            </tr>
+            <tr>
+              <td>50% virtual </td>
+              <td id = "half"></td>
+            </tr>
+            <tr>
+              <td>75% virtual </td>
+              <td id = "seventy"></td>
+            </tr>
+            <tr>
+              <td>Fully virtual </td>
+              <td id = "full_virt"></td>
+            </tr>
+          </table>
+        </div>
+        
+      </div>
+    </div>
+    </div>
+	</section>
+
+  <section id = "references-section">
+    <div class = "row" style = "margin-bottom: 50%;"></div>
+  </section>
+
+
+ <!-- <a href="https://greenhealth.ucsf.edu"  target = "_blank">
+    <img src="green.png" alt="UCSF GreenHealth Lab" width="9%" height="5%" style = "position: fixed; bottom: 0; right: 0;">
+  </a> -->
+  
+
+
+
+	<!-- Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
+  <!-- Leaflet JavaScript file -->
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+ integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+ crossorigin=""></script>
+ <script src="https://asradonc.github.io/networkwithoutharm.github.io/chart.umd.js"></script>
+
+<footer height = "2%" style = "position: absolute; right: 0; margin-right: 1%;"> A <a href="https://greenhealth.ucsf.edu"  target = "_blank">GreenHealth Lab </a> initiative. Developed and deployed by A.S. </footer>
+	<script type = "module">
+    import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.4.0/latlon-spherical.min.js';
+		$(document).ready(function() {
+  // handle nav link click event
+  // Set the URL of the CSV file
+  var parsedData;
+  var conf_emit = document.getElementById('conf_emit');
+  conf_emit.innerHTML = 0;
+  var poly_counter = 0;
+  var airport_names;
+  var url = "https://raw.githubusercontent.com/ASRadOnc/networkgreener.github.io/main/airports_database_calculator_final.csv";
+  var emit;
+  var veg;
+  var recycle;
+  var food_waste;
+  var local;
+  var car;
+  var energy;
+  var clothes;
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart;
+  myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Offsets', 'Emissions'],
+        datasets: [
+            {label: 'Your emissions',
+             backgroundColor: 'rgba(75, 192, 192, 0.8)',
+             borderColor: 'rgba(50, 50, 50, 1)', 
+             borderWidth: 1,
+             data: [0 , emit]},
+            {
+                label: 'Go Vegetarian',
+                backgroundColor: 'rgba(255, 162, 145, 0.8)',
+                borderColor: 'rgba(225, 115, 98, 1)',
+                borderWidth: 1,
+                data: [0.9 * veg , 0],
+            },
+            {
+                label: 'Recycle',
+                backgroundColor: 'rgba(140, 190, 214, 0.8)',
+                borderColor: 'rgba(121, 163, 184, 1)',
+                borderWidth: 1,
+                data: [0.21 * recycle,0],
+            },
+            {
+                label: 'Reduce your food waste to zero',
+                backgroundColor: 'rgba(255, 237, 153, 0.8)',
+                borderColor: 'rgba(224, 204, 92, 1)',
+                borderWidth: 1,
+                data: [0.37 * food_waste,0],
+            },
+            {
+                label: 'Eat local food only',
+                backgroundColor: 'rgba(186, 173, 240, 0.8)',
+                borderColor: 'rgba(171, 153, 230, 1)',
+                borderWidth: 1,
+                data: [0.36 * local,0],
+            },
+            {
+                label: 'Live car free',
+                backgroundColor: 'rgba(254, 218, 117, 0.8)',
+                borderColor: 'rgba(235, 185, 91, 1)',
+                borderWidth: 1,
+                data: [3.08 * car,0],
+            },
+            {
+                label: 'Source household energy from renewables',
+                backgroundColor: 'rgba(255, 186, 216, 0.8)',
+                borderColor: 'rgba(228, 143, 181, 1)',
+                borderWidth: 1,
+                data: [1.4 * energy,0],
+            },
+            {
+                label: 'Hang clothing to dry',
+                backgroundColor: 'rgba(186, 240, 227, 0.8)',
+                borderColor: 'rgba(167, 224, 216, 1)',
+                borderWidth: 1,
+                data: [0.21 * clothes,0],
+            }
+        ]
+    },
+    options: {
+
+        scales: {
+            x: {
+                stacked: true,
+        },
+            y: {
+                stacked: true,
+        }
+      },
+    }
+});
+
+// Make an AJAX request to the URL
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // Once the file is loaded, parse the CSV data
+      var csvData = xhr.responseText;
+      parsedData = parseCSV(csvData);
+      //airport_names = parseCSV_col(csvData )
+      //parsedData.map(function(obj) {
+      //return { value: obj.id, text: obj.name };
+      //});
+     // Do something with the parsed data
+    
+     // initialize selectize input
+     $('#origin').selectize({
+      options: parsedData,
+      render: {
+        option: function(item, escape) {
+          return '<div style = "padding: 2%;">' +  escape(item.name_calc) + "<br>" + escape(item.municipality) + " - " + escape(item.Country_Name) + "</div>";
+        }
+      },
+      valueField: 'name_calc',
+      labelField: 'name_calc',
+      searchField: ['name_calc', 'municipality', 'Country.Name'],
+      allowInput: true,
+      placeholder: "Type city/airport name, e.g., San Francisco (SFO)"
+    });
+
+   $('#destination').selectize({
+    options: parsedData,
+      render: {
+        option: function(item, escape) {
+          return '<div style = "padding: 2%;">' +  escape(item.name_calc) + "<br>" +  escape(item.municipality) + " - " + escape(item.Country_Name) +  "</div>";
+        }
+      },
+      valueField: 'name_calc',
+      labelField: 'name_calc',
+      searchField: ['name_calc', 'municipality', 'Country.Name'],
+      allowInput: true,
+    placeholder: "Type city/airport name, e.g., Beirut (BEY)"
+  });
+
+    }
+  };
+  xhr.send();
+
+  
+
+// Parse the CSV data into an array of objects
+  function parseCSV(csvData) {
+    var lines = csvData.split("\n");
+    var headers = lines[0].split(",");
+    var result = [];
+    for (var i = 1; i < lines.length; i++) {
+      var obj = {};
+      var currentLine = lines[i].split(",");
+      for (var j = 0; j < headers.length; j++) {
+       obj[headers[j]] = currentLine[j];
+      }
+      result.push(obj);
+    }
+    return result;
+  }
+
+// Function to parse CSV data and return values from a specific column
+  function parseCSV_col(csvData, column) {
+    var parsedData_ = [];
+    var lines = csvData.split("\n");
+    var headers = lines[0].split(",");
+    var columnIndex = headers.indexOf(column);
+  
+    for (var i = 1; i < lines.length; i++) {
+      var values = lines[i].split(",");
+      if (values.length > 1) {
+        parsedData_.push(values[columnIndex].trim());
+       }
+    }
+  
+    return parsedData_;
+
+  }
+
+
+  $('.nav-link').click(function(e) {
+    e.preventDefault();
+    // hide all sections
+    $('section').hide();
+    // show the section for the clicked link
+    var sectionId = $(this).data('section') + '-section';
+    $('#' + sectionId).show();
+  });
+
+  // Get the submit button and all required form fields
+const submitBtn = document.getElementById('submit-btn');
+const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+
+// Disable the submit button by default
+submitBtn.disabled = true;
+
+// Add an event listener to each required form field that checks if all required fields are filled in
+requiredFields.forEach(field => {
+  field.addEventListener('input', () => {
+    // Check if all required fields are filled in
+    const allFieldsFilledIn = Array.from(requiredFields).every(field => field.value.trim() !== '');
+
+    // Enable the submit button if all required fields are filled in, otherwise disable it
+    submitBtn.disabled = !allFieldsFilledIn;
+  });
+});
+  
+
+
+/* 
+  document.getElementById('off_button').addEventListener('click', function() {
+  // prevent the default form submission behavior
+  event.preventDefault();
+  $('section').hide();
+  // show the section for the clicked link
+  var sectionId = 'offset-section';
+  $('#' + sectionId).show();
+  navbarNav.scrollIntoView({ behavior: 'smooth' });
+  }); 
+ */
+
+
+
+  document.getElementById('submit-btn').addEventListener('click', function() {
+    const form = document.querySelector('form');
+    if (!form.checkValidity()) {
+    // If any required field is not filled, display an error message or alert the user
+    alert('Please fill out all required fields');
+    event.preventDefault();
+  }
+  else {
+    //Get longitude and latitude for origin and destination
+    const result = parsedData.find(parsedData => parsedData.name_calc == document.getElementById('origin').value)
+    const result_dest = parsedData.find(parsedData => parsedData.name_calc == document.getElementById('destination').value)
+    const p1_lo = result ? result.longitude_r : null;
+    const p1_la = result ? result.latitude_r : null;
+
+    const p2_lo = result_dest ? result_dest.longitude_r : null;
+    const p2_la = result_dest ? result_dest.latitude_r : null;
+    
+    const p1 = new LatLon(p1_la , p1_lo);
+    const p2 = new LatLon(p2_la , p2_lo);
+    const distance = p1.distanceTo(p2)/1609;
+
+    const num_days = document.getElementById("quantity").value;
+    const transportOptions = document.getElementsByName("transport");
+let transport;
+
+for (let i = 0; i < transportOptions.length; i++) {
+  if (transportOptions[i].checked) {
+    transport = transportOptions[i].value;
+    break;
+  }
+}
+
+
+    const hotel = document.getElementById("hotel");
+    
+    const virtual = document.getElementById("virtual");
+
+    const coef = (transport === "Driving") ? 0.91 : (transport === "Flight") ? 0.39 : (transport === "Carpool") ? 0.2275 : (transport === "Train") ? 0.252262529 : (transport == "Biking") ? 0.00001915119 : 0;
+    const lodg = (hotel.checked) ? 1 : 0;
+
+    emit = (coef*distance*2 + 67.24*num_days*lodg + 12.25*num_days)*0.000453592;
+    emit = (virtual.checked) ? (157.35*6*num_days*1e-6).toFixed(4) : emit.toFixed(2);
+
+    const cards = document.querySelectorAll('.card');
+    const cardsContainer = document.querySelector('#cards-container');
+    const offs_ = document.querySelectorAll('#offs_row');
+    const emissionsContainer = document.querySelector('.emissions_appear');
+
+    
+
+    emissionsContainer.style.display = 'block';
+
+     // Update the display property of each card to "block"
+    cards.forEach(card => {
+      card.style.display = 'block';
+    });
+    
+
+
+
+    offs_.forEach(offs_row => {
+      offs_row.style.display = 'block';
+    })
+
+    var actions = (emit-0.0028).toFixed(3);
+
+    document.getElementById("distance").innerHTML = "A nonstop flight to the conference is ~ " + Math.round(distance) + " miles";
+    document.getElementById("emissions").innerHTML = "Your estimated waste is ~" + emit + " metric tons of CO2";
+    document.getElementById("actions").innerHTML = "Virtual attendance would spare " + actions + " metric tons of CO2";
+    // Scroll to the cards section
+    //cardsContainer.scrollIntoView({ behavior: 'smooth' });
+    update_chart();
+
+
+  }
+});
+
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+function update_chart() {
+    veg = document.getElementById("veg").checked ? 1:0;
+    recycle = document.getElementById("recycle").checked ? 1:0;
+    food_waste = document.getElementById("food_waste").checked ? 1:0;
+    local = document.getElementById("local").checked ? 1:0;
+    car = document.getElementById("car").checked ? 1:0;
+    energy = document.getElementById("energy").checked ? 1:0;
+    clothes = document.getElementById("clothes").checked ? 1:0;
+    myChart.data = {
+        labels: ['Offsets', 'Emissions'],
+        datasets: [
+            {label: 'Your emissions',
+             backgroundColor: 'rgba(75, 192, 192, 0.8)',
+             borderColor: 'rgba(50, 50, 50, 1)', 
+             borderWidth: 1,
+             data: [0 , emit]},
+            {
+                label: 'Go Vegetarian',
+                backgroundColor: 'rgba(255, 162, 145, 0.8)',
+                borderColor: 'rgba(225, 115, 98, 1)',
+                borderWidth: 1,
+                data: [0.9 * veg , 0],
+            },
+            {
+                label: 'Recycle',
+                backgroundColor: 'rgba(140, 190, 214, 0.8)',
+                borderColor: 'rgba(121, 163, 184, 1)',
+                borderWidth: 1,
+                data: [0.21 * recycle,0],
+            },
+            {
+                label: 'Reduce your food waste to zero',
+                backgroundColor: 'rgba(255, 237, 153, 0.8)',
+                borderColor: 'rgba(224, 204, 92, 1)',
+                borderWidth: 1,
+                data: [0.37 * food_waste,0],
+            },
+            {
+                label: 'Eat local food only',
+                backgroundColor: 'rgba(186, 173, 240, 0.8)',
+                borderColor: 'rgba(171, 153, 230, 1)',
+                borderWidth: 1,
+                data: [0.36 * local,0],
+            },
+            {
+                label: 'Live car free',
+                backgroundColor: 'rgba(254, 218, 117, 0.8)',
+                borderColor: 'rgba(235, 185, 91, 1)',
+                borderWidth: 1,
+                data: [3.08 * car,0],
+            },
+            {
+                label: 'Source household energy from renewables',
+                backgroundColor: 'rgba(255, 186, 216, 0.8)',
+                borderColor: 'rgba(228, 143, 181, 1)',
+                borderWidth: 1,
+                data: [1.4 * energy,0],
+            },
+            {
+                label: 'Hang clothing to dry',
+                backgroundColor: 'rgba(186, 240, 227, 0.8)',
+                borderColor: 'rgba(167, 224, 216, 1)',
+                borderWidth: 1,
+                data: [0.21 * clothes,0],
+            }
+        ]
+    }
+    myChart.options = {
+        scales: {
+            x: {
+                stacked: true,
+                grid: {
+                  display: false
+                }
+            },
+            y: {
+                stacked: true,
+                grid: {
+                  display: false
+                }
+            }
+        },
+        backgroundColor: 'white'
+    }
+    myChart.update();
+};
+// Add an event listener for the change event to each checkbox
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    update_chart();
+  })
+});
+
+var us_attendance = document.getElementById("us_attendees");
+var int_attendance = document.getElementById("int_attendees");
+
+function update_table() {
+  var quarter = document.getElementById('quarter');
+  var half = document.getElementById('half');
+  var seventy = document.getElementById('seventy');
+  var full_virt = document.getElementById('full_virt');
+  var us = parseInt((document.getElementById("us_attendees").value == "") ? 0 : document.getElementById("us_attendees").value);
+  var int = parseInt((document.getElementById("int_attendees").value == "") ? 0 : document.getElementById("int_attendees").value);
+  var attend_num = us + int;
+  var est_25_b = (0.63*attend_num).toFixed(0);
+  var est_25_w = (0.96*attend_num).toFixed(0);
+  var est_50_b = (0.38*attend_num).toFixed(0);
+  var est_50_w = (0.73*attend_num).toFixed(0);
+  var est_75_b = (0.15*attend_num).toFixed(0);
+  var est_75_w = (0.48*attend_num).toFixed(0);
+  var r_25 = est_25_b + " - " + est_25_w;
+  var r_50 = est_50_b + " - " + est_50_w;
+  var r_75 = est_75_b + " - " + est_75_w;
+  var r_100 = (0.0028*attend_num).toFixed(2);
+  quarter.innerHTML = r_25;
+  half.innerHTML = r_50;
+  seventy.innerHTML = r_75;
+  full_virt.innerHTML = r_100;
+  var n = 0.462*us + 1.928*int;
+  conf_emit.innerHTML =  n.toFixed(0);   
+};
+
+
+us_attendance.addEventListener('input', function() {
+  update_table();
+});
+
+int_attendance.addEventListener('input', function() {
+  update_table();
+});
+    })
+</script>
+
+  
+</body>
+</html>
