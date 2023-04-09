@@ -72,7 +72,7 @@ line-height: 22px;
       padding-bottom: 2.5%;
     } 
 		#emissions-section {
-			display: block;
+			display: none;
 		}
 		#offset-section {
 			display: none;
@@ -342,7 +342,7 @@ form select {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item active">
+				<li class="nav-item">
 					<a class="nav-link" href="#" data-section="emissions">Emissions Calculator</a>
 				</li>
         <li class="nav-item">
@@ -461,7 +461,7 @@ form select {
               <div class="form-group">
                 <label for="origin">Where from?</label>
                 <select id="origin" name="origin" required>
-                </select> <br>
+                </select>
               </div>   
               <div class="destination">
                 <label for="destination-">Where to?</label> 
@@ -710,6 +710,9 @@ form select {
 	<script type = "module">
     import LatLon from 'https://cdn.jsdelivr.net/npm/geodesy@2.4.0/latlon-spherical.min.js';
 		$(document).ready(function() {
+			$('section').hide();
+    // show the section for the clicked link
+      $('#emissions-section').show();
   // handle nav link click event
   // Set the URL of the CSV file
   var parsedData;
